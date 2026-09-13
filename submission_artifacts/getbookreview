@@ -1,0 +1,6 @@
+curl -s http://localhost:5000/review/1
+
+{
+  "message": "No reviews for this book yet",
+  "reviews": {}
+}
