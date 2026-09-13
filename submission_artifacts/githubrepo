@@ -1,29 +1,3 @@
-curl -s https://api.github.com/repos/syedmuhammadshah510/expressBookReviews
+curl -s https://api.github.com/repos/syedmuhammadshah510/expressBookReviews | jq '.parent.full_name'
 
-{
-  "id": 1368363556,
-  "name": "expressBookReviews",
-  "full_name": "syedmuhammadshah510/expressBookReviews",
-  "private": false,
-  "owner": {
-    "login": "syedmuhammadshah510",
-    "html_url": "https://github.com/syedmuhammadshah510"
-  },
-  "html_url": "https://github.com/syedmuhammadshah510/expressBookReviews",
-  "description": "nodejsFinalModule",
-  "fork": true,
-  "url": "https://api.github.com/repos/syedmuhammadshah510/expressBookReviews",
-  "parent": {
-    "id": 533628036,
-    "name": "expressBookReviews",
-    "full_name": "ibm-developer-skills-network/expressBookReviews",
-    "html_url": "https://github.com/ibm-developer-skills-network/expressBookReviews"
-  },
-  "source": {
-    "id": 533628036,
-    "name": "expressBookReviews",
-    "full_name": "ibm-developer-skills-network/expressBookReviews",
-    "html_url": "https://github.com/ibm-developer-skills-network/expressBookReviews"
-  },
-  "default_branch": "main"
-}
+"ibm-developer-skills-network/expressBookReviews"
