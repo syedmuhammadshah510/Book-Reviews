@@ -38,10 +38,63 @@ regd_users.post("/login", (req, res) => {
   }
 });
 
-// Add a book review
+// Add or modify a book review
 regd_users.put("/auth/review/:isbn", (req, res) => {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+  const isbn = req.params.isbn;
+  const review = req.query.review || req.body.review;
+  const username = req.session?.authorization?.username || req.user?.username;
+
+  if (!username) {
+    return res.status(403).json({ message: "User not authenticated" });
+  }
+
+  if (!review) {
+    return res.status(400).json({ message: "Review content is required" });
+  }
+
+  if (!books[isbn]) {
+    return res.status(404).json({ message: "Book not found" });
+  }
+
+  if (!books[isbn].reviews) {
+    books[isbn].reviews = {};
+  }
+
+  const isExisting = Boolean(books[isbn].reviews[username]);
+  books[isbn].reviews[username] = review;
+
+  return res.status(200).json({
+    message: isExisting
+      ? `Review for book with ISBN ${isbn} successfully updated`
+      : `Review for book with ISBN ${isbn} successfully added`,
+    reviews: books[isbn].reviews
+  });
+});
+
+// Delete a book review
+regd_users.delete("/auth/review/:isbn", (req, res) => {
+  const isbn = req.params.isbn;
+  const username = req.session?.authorization?.username || req.user?.username;
+
+  if (!username) {
+    return res.status(403).json({ message: "User not authenticated" });
+  }
+
+  if (!books[isbn]) {
+    return res.status(404).json({ message: "Book not found" });
+  }
+
+  if (books[isbn].reviews && books[isbn].reviews[username]) {
+    delete books[isbn].reviews[username];
+    return res.status(200).json({
+      message: `Review for ISBN ${isbn} posted by ${username} successfully deleted`,
+      reviews: books[isbn].reviews
+    });
+  } else {
+    return res.status(404).json({
+      message: `No review found for user ${username} under ISBN ${isbn}`
+    });
+  }
 });
 
 module.exports.authenticated = regd_users;
