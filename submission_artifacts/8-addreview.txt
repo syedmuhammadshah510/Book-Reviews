@@ -1,0 +1,13 @@
+Command:
+curl -i -s -b cookies.txt -X PUT "http://localhost:5000/customer/auth/review/1?review=Superb%20classic%20literature!"
+
+Output:
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+{
+  "message": "Review for book with ISBN 1 successfully added",
+  "reviews": {
+    "johndoe": "Superb classic literature!"
+  }
+}
